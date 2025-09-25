@@ -20,4 +20,6 @@ final class AuthorController extends AbstractController
     public function showAuthor($name){
         return $this->render('author/show.html.twig',['nom' => $name, 'prenom' => 'ben foulen']);
     }
+
+    
 }
