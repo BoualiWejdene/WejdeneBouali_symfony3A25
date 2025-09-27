@@ -1,0 +1,8 @@
+{%  set author = authors|filter(a => a.id == id)|first %}
+
+<div style="text-align: center">
+    <h2 >{{ author.username }}</h2>
+    <img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="200" >
+    <p><strong>Email :</strong> {{ author.email }}</p>
+    <p><strong>Nombre de livres :</strong> {{ author.nb_books }}</p>
+</div>
