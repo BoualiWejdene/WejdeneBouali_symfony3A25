@@ -1,0 +1,10 @@
+<table border= "1">
+    <tr> <th> Username </th> <th> Email </th> <th> Actions </th> </tr>
+    {% for auteur in list %}
+    <tr> 
+    <td>{{auteur.username}} </td>
+    <td>  {{auteur.email}} </td>
+    <td>  update, delete </td>
+    </tr>
+     {% endfor %}
+</table>
