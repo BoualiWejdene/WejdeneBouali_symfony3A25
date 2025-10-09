@@ -4,7 +4,12 @@
     <tr> 
     <td>{{auteur.username}} </td>
     <td>  {{auteur.email}} </td>
-    <td>  update, delete </td>
+    <td> 
+      <a href="{{path('deleteAuthor',{'id':auteur.id})}}">delete</a>
+      <a href= "{{path('showAuthorDetails',{'id':auteur.id})}}"> show </a>
+      <a href= ""> update </a>
+     </td>
     </tr>
      {% endfor %}
 </table>
+<a href="{{path('addForm')}}">Add an author</a>

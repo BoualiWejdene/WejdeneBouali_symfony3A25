@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -51,5 +56,54 @@ final class AuthorController extends AbstractController
         return $this-> render('author/showAll.html.twig',['list' => $auteurs]);
 
     }
+
+    #[Route('/addStat',name:'addStat')]
+    public function addSat(ManagerRegistry $doctrine){
+        $author =new Author();
+        $author->setEmail('Test@gmail.com');
+        $author->setUsername('Foulen');
+        $em =  $doctrine->getManager();
+        $em->persist($author);
+        $em->flush();
+        //return new Response("Author added succesfully");
+        return $this->redirectToRoute("showAll");
+
+    }
+
     
+    #[Route('/deleteAuthor/{id}',name:'deleteAuthor')]
+    public function deleteAuthor($id,AuthorRepository $repo, ManagerRegistry $manager){
+        $author = $repo->find($id);
+        $em =  $manager ->getManager();
+        $em->remove($author);
+        $em->flush();
+       
+        return $this->redirectToRoute("showAll");
+
+    }
+
+    #[Route('/showAuthorDetails/{id}',name:'showAuthorDetails')]
+    public function showAuthorDetails($id,AuthorRepository $repo){
+        $author = $repo->find($id);
+        return $this->render('author/showDetails.html.twig', ['author' =>$author]);
+
+    }
+    
+    #[Route('/addForm',name:'addForm')]
+    public function addForm(ManagerRegistry $doctrine,Request $request){
+        $author =new Author();
+        $form = $this->createForm(AuthorType::class,$author);
+        $form->add('add',SubmitType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $em = $doctrine->getManager();
+            $em->persist($author);
+            $em->flush();
+
+            return $this->redirectToRoute("showAll");
+
+        }
+        return $this->render('author/add.html.twig', ['formulaire' => $form->createView()]);
+
+    }
 }
