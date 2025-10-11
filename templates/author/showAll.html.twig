@@ -1,3 +1,4 @@
+<h1>List authors</h1>
 <table border= "1">
     <tr> <th> Username </th> <th> Email </th> <th> Actions </th> </tr>
     {% for auteur in list %}
@@ -7,7 +8,7 @@
     <td> 
       <a href="{{path('deleteAuthor',{'id':auteur.id})}}">delete</a>
       <a href= "{{path('showAuthorDetails',{'id':auteur.id})}}"> show </a>
-      <a href= ""> update </a>
+      <a href= "{{path('editForm',{'id':auteur.id})}}"> update </a>
      </td>
     </tr>
      {% endfor %}

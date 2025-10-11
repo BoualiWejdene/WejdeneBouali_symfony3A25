@@ -106,4 +106,22 @@ final class AuthorController extends AbstractController
         return $this->render('author/add.html.twig', ['formulaire' => $form->createView()]);
 
     }
+
+    #[Route('/editForm/{id}',name:'editForm')]
+    public function editForm($id,AuthorRepository $repo,Request $request,ManagerRegistry $doctrine){
+        $author = $repo->find($id);
+        $form = $this->createForm(AuthorType::class,$author);
+        $form->add('update',SubmitType::class);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $em = $doctrine->getManager();
+            $em->persist($author);
+            $em->flush();
+
+            return $this->redirectToRoute("showAll");
+
+        }
+        return $this->render('author/edit.html.twig',['formulaire' => $form->createView()]);
+    }
 }
