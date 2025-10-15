@@ -1,0 +1,7 @@
+<h1> Book</h1>
+<div>
+    Title of the book : {{book.title}}<br>
+    Publication Date : {{book.publicationDate | date('F j, Y H:i')}}<br>
+    Author : {{book.author.username}}
+</div>
+<br><a href="{{path('showBooks')}}">back to list</a>

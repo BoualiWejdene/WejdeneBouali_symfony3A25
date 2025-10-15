@@ -24,8 +24,11 @@ class Author
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author', cascade: ["remove"], orphanRemoval: true)]
     private Collection $books;
+
+    #[ORM\Column]
+    private ?int $nb_books = 0;
 
     public function __construct()
     {
@@ -57,6 +60,18 @@ class Author
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+    
+    public function getNbBooks(): ?int
+    {
+        return $this->nb_books;
+    }
+
+    public function setNbBooks(int $nb_books): static
+    {
+        $this->nb_books = $nb_books;
 
         return $this;
     }

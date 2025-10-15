@@ -116,7 +116,6 @@ final class AuthorController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted()){
             $em = $doctrine->getManager();
-            $em->persist($author);
             $em->flush();
 
             return $this->redirectToRoute("showAll");
@@ -124,4 +123,5 @@ final class AuthorController extends AbstractController
         }
         return $this->render('author/edit.html.twig',['formulaire' => $form->createView()]);
     }
+
 }

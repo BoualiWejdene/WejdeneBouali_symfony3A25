@@ -1,0 +1,31 @@
+<h1>Update Book</h1>
+{{form_start(formulaire)}}
+    {{form_label(formulaire.ref)}}
+    {{form_widget(formulaire.ref)}}
+    {{form_errors(formulaire.ref)}}
+
+    <br>
+    {{form_label(formulaire.title)}}
+    {{form_widget(formulaire.title)}}
+    {{form_errors(formulaire.title)}}
+
+    <br>
+    {{form_label(formulaire.publicationDate)}}
+    {{form_widget(formulaire.publicationDate)}}
+    {{form_errors(formulaire.publicationDate)}}
+
+    {{form_label(formulaire.published)}}
+    {{form_widget(formulaire.published)}}
+    {{form_errors(formulaire.published)}}
+
+    <br>
+    {{form_label(formulaire.category)}}
+    {{form_widget(formulaire.category)}}
+    {{form_errors(formulaire.category)}}
+
+    <br>
+    {{form_label(formulaire.author) }}
+    {{form_widget(formulaire.author)}}
+
+{{form_end(formulaire)}}
+<a href="{{path('showBooks')}}">back to list</a>
