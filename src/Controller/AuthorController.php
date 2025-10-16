@@ -124,4 +124,12 @@ final class AuthorController extends AbstractController
         return $this->render('author/edit.html.twig',['formulaire' => $form->createView()]);
     }
 
+    #[Route('/ShowAllAuthorQB',name:'ShowAllAuthorQB')]
+    public function ShowAllAuthorQB(AuthorRepository $repo){
+        $authors = $repo->showAllQB();
+        return $this-> render('author/showAll.html.twig',['list' => $authors]);
+    }
+
+    
+
 }
