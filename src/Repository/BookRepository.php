@@ -84,4 +84,11 @@ class BookRepository extends ServiceEntityRepository
         ->execute();
 
     }
+
+
+    public function nbLivreRomance(){
+        $entityManager=  $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT COUNT(b.id) FROM App\Entity\Book b WHERE b.category LIKE :condition')->setParameter('condition','Romance');
+        return $query->getSingleScalarResult();
+    }
 }

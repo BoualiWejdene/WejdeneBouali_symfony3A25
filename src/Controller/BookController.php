@@ -148,4 +148,12 @@ final class BookController extends AbstractController
         $nbbook = $repo->updateScienceFictionToRomance();
         return $this->redirectToRoute("showBooks");
     }
+
+    #[Route('/nbLivreRomance',name:'nbLivreRomance')]
+    public function nbLivreRomance(BookRepository $repo){
+        $nbbooks = $repo->nbLivreRomance();
+        
+        return $this->render('Book/shownbBooks.html.twig', ['nbBooks' => $nbbooks]);
+    }
+
 }

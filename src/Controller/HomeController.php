@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\MessageGenerator;
 
 final class HomeController extends AbstractController
 {
@@ -29,4 +30,11 @@ final class HomeController extends AbstractController
         return new Response("Hello 3A25".$id);
         //return $this->render('home/index.html.twig',['identifiant' => 5]);
     }
+
+    #[Route('/message', name: 'message')]
+    public function message(MessageGenerator $messageGenerator): Response{
+        $message = $messageGenerator->getHappyMessage();
+        return new Response("<h1>Citation du jour :</h1><p>$message</p>");
+    } 
 }
+

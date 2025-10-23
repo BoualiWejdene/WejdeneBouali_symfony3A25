@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\HappyQuote;
+
 
 final class AuthorController extends AbstractController
 {
@@ -51,9 +53,10 @@ final class AuthorController extends AbstractController
     }
 
     #[Route('/showAll',name:'showAll')]
-    public function showAll(AuthorRepository $repo){
+    public function showAll(AuthorRepository $repo,HappyQuote $HappyQuote){
         $auteurs = $repo->findAll();
-        return $this-> render('author/showAll.html.twig',['list' => $auteurs]);
+        $message = $HappyQuote->getHappyMessage();
+        return $this-> render('author/showAll.html.twig',['list' => $auteurs,'message' => $message]);
 
     }
 
@@ -134,6 +137,12 @@ final class AuthorController extends AbstractController
     public function listAuthorByEmail(AuthorRepository $repo ){
         $authors = $repo->listAuthorByEmail();
         return $this->render('author/list_by_email.html.twig',['list' => $authors]); 
+    }
+
+    #[Route('/ShowAllDQL',name:'ShowAllDQL')]
+    public function ShowAllDQL(AuthorRepository $repo){
+        $authors = $repo->ShowAllAuthorDQL();
+        return $this-> render('author/showAll.html.twig',['list' => $authors]);
     }
     
 
