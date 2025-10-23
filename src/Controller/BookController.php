@@ -118,4 +118,34 @@ final class BookController extends AbstractController
 
     }
 
+
+    #[Route('/searchBookByRef',name:'searchBookByRef')]
+    public function searchBookByRef(BookRepository $repo,Request $request){
+        $ref = $request->query->get('ref');
+        if($ref){
+            $books = $repo->searchBookByRef($ref);
+        }
+    
+        return $this->render('Book/showBooks.html.twig', ['publishedBooks' => $books ,'ref' => $ref]);
+    }
+
+    #[Route('/booksListByAuthors',name:'booksListByAuthors')]
+    public function booksListByAuthors(BookRepository $repo){
+        $books = $repo->booksListByAuthors();
+        
+        return $this->render('Book/showBooks.html.twig', ['publishedBooks' => $books]);
+    }
+
+    #[Route('/findBooksBefore2023',name:'findBooksBefore2023')]
+    public function findBooksBefore2023(BookRepository $repo){
+        $books = $repo->findBooksBefore2023();
+        
+        return $this->render('Book/showBooks.html.twig', ['publishedBooks' => $books]);
+    }
+
+    #[Route('/updateScienceFictionToRomance',name:'updateScienceFictionToRomance')]
+    public function updateScienceFictionToRomance(BookRepository $repo){
+        $nbbook = $repo->updateScienceFictionToRomance();
+        return $this->redirectToRoute("showBooks");
+    }
 }

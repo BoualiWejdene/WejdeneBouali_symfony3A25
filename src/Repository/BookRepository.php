@@ -40,4 +40,48 @@ class BookRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function searchBookByRef(string $ref){
+        return $this->createQueryBuilder('b')
+            ->where('b.ref LIKE :ref')
+            ->andWhere('b.published = 1')
+            ->setParameter('ref','%' . $ref. '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function booksListByAuthors(){
+        return $this->createQueryBuilder('b')
+        ->join('b.author','a')
+        ->addSelect('a')
+        ->where('b.published = 1')
+        ->orderBy('a.username','ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findBooksBefore2023(){
+        return $this->createQueryBuilder('b')
+        ->join('b.author','a')
+        ->addSelect('a')
+        ->where('b.publicationDate < :date')
+        ->andWhere('a.nb_books > :minbooks')
+        ->setParameter('date', new \DateTime('2023-01-01'))
+        ->setParameter('minbooks',10)
+        ->getQuery()
+        ->getResult();
+
+    }
+
+    public function updateScienceFictionToRomance(){
+        return $this->createQueryBuilder('b')
+        ->update()
+        ->set('b.category',':newcategory')
+        ->where('b.category = :oldcategory')
+        ->setParameter('oldcategory','Science-Fiction')
+        ->setParameter('newcategory','Romance')
+        ->getQuery()
+        ->execute();
+
+    }
 }

@@ -43,13 +43,19 @@ class AuthorRepository extends ServiceEntityRepository
 
     public function showAllQB(){
         return $this->createQueryBuilder('a')
-                    ->andWhere('a.email LIKE :condition')
-                    ->setParameter('condition','%a%')
-                    // ->andWhere('a.email','?1')
-                    // ->setParameter('1','LIKE %a%')
-                    ->orderBy('a.username','ASC')
-                    ->getQuery()
-                    ->getResult();
-                                
+            ->where('a.email LIKE :condition')
+            ->setParameter('condition', '%a%')
+            // ->andWhere('a.email LIKE ?1')
+            // ->setParameter('1','%a%')
+            ->orderBy('a.username', 'ASC')
+            ->getQuery()
+            ->getResult();
+        }
+
+    public function listAuthorByEmail(){
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.email', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

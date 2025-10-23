@@ -1,4 +1,9 @@
 <h1>List of Books</h1>
+<form method="get" action="{{ path('searchBookByRef') }}" >
+    <label>Ref </label>
+    <input type="number" name="ref" value="{{ ref|default('') }}">
+    <button type="submit">Search</button>
+</form>
 {% if publishedBooks is empty %}
     <div>No Books found</div>
 {% else %}
@@ -18,8 +23,14 @@
         {% endfor %}
     </table>
 
-    <p>Number of published books : {{nbPublished}} </p>
-    <p>Number of unpublished books : {{nbUnpublished}} </p>
-    <button><a href="{{path('addBook')}}">Create new</a></button>
+    {% if nbPublished is defined and nbUnpublished is defined %}
+        <p>Number of published books : {{ nbPublished }}</p>
+        <p>Number of unpublished books : {{ nbUnpublished }}</p>
+    {% endif %}
+    <br><button><a href="{{path('addBook')}}">Create new</a></button>
     <br><a href="{{path('deleteAuthorsWithoutBooks')}}">Delete auhtors without books</a>
+    <br><a href="{{ path('booksListByAuthors') }}">Trier les livres par auteur</a>
+    
+    <br><a href="{{ path('findBooksBefore2023') }}" >Livres publiés avant 2023 (Auteurs > 10 livres)</a>
+    <br><a href="{{ path('updateScienceFictionToRomance') }}" >Remplacer "Science-Fiction" par "Romance"</a>
 {% endif %}
